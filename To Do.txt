@@ -1,0 +1,10 @@
+- CRONOGRAMA | Jogo Ju -
+
+15/10 (Terça) - Chão e parede (terreno) + Personagem principal se locomovendo sem erro
+16/10 (Quarta) - Ambiente (criar poltronas, macas, armários, etc.)
+17/10 (Quinta) - Criar o paciente e funções de sintomas e histórico
+18/10 (Sexta) - BREAK
+19/10 (Sábado) - Apresentação Kelton
+20/10 (Domingo) - Apresentação Kelton + Trabalho Higor
+
+21/10 (Segunda) -
