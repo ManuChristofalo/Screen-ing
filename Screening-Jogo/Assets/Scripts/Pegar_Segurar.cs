@@ -7,26 +7,30 @@ public class SegurarEPegarObjetos : MonoBehaviour
     public float distanciaMaxima = 4.0f; // Distância máxima para pegar o objeto
     public Transform pontoMao;           // Posição onde o objeto será segurado
     public Transform objetoSegurado;     // Objeto que será segurado
-    public LayerMask layer;               // Define quais objetos são interagíveis (ex. objetos na layer "Interagível")
+    public LayerMask layer;              // Define quais objetos são interagíveis (ex. objetos na layer "Interagível")
 
     void Update()
     {
         // Verifica se o jogador pressionou a tecla "E" para pegar o objeto
-        if (Input.GetKeyDown(KeyCode.E)) {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
             RaycastHit hit;
 
             // Lança o Raycast da posição da câmera, verificando a distância e o Layer do objeto
-            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, distanciaMaxima, layer)) {
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, distanciaMaxima, layer))
+            {
                 // Verifica se o objeto atingido tem a tag correta
                 Debug.Log("Objeto atingido: " + hit.transform.name); // Adiciona log para verificar o Raycast
-                if (hit.transform.CompareTag("Pegavel")) {
+                if (hit.transform.CompareTag("Pegavel"))
+                {
                     PegarObjeto(hit.transform);
                 }
             }
         }
 
         // Solta o objeto se a tecla "Q" for pressionada
-        if (Input.GetKeyDown(KeyCode.Q)) {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
             SoltarObjeto();
         }
     }
@@ -60,13 +64,15 @@ public class SegurarEPegarObjetos : MonoBehaviour
 
     void SoltarObjeto()
     {
-        if (objetoSegurado != null) {
+        if (objetoSegurado != null)
+        {
             // Remove o objeto da mão
             objetoSegurado.SetParent(null);
 
             // Reativa a física do objeto
             Rigidbody rb = objetoSegurado.GetComponent<Rigidbody>();
-            if (rb != null) {
+            if (rb != null)
+            {
                 rb.isKinematic = false;
                 rb.useGravity = true; // Reativa a gravidade para o objeto voltar ao comportamento normal
             }
@@ -74,5 +80,17 @@ public class SegurarEPegarObjetos : MonoBehaviour
             // Limpa a referência do objeto segurado
             objetoSegurado = null;
         }
+    }
+
+    // Método adicional para verificar se um objeto está sendo segurado
+    public bool EstaSegurandoObjeto()
+    {
+        return objetoSegurado != null;
+    }
+
+    // Método adicional para obter o nome do objeto segurado
+    public string ObterNomeObjetoSegurado()
+    {
+        return objetoSegurado != null ? objetoSegurado.name : "Nenhum objeto";
     }
 }
