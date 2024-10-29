@@ -6,7 +6,7 @@ public class SegurarEPegarObjetos : MonoBehaviour
 {
     public float distanciaMaxima = 4.0f; // Distância máxima para pegar o objeto
     public Transform pontoMao;           // Posição onde o objeto será segurado
-    private Transform objetoSegurado;     // Objeto que será segurado
+    public Transform objetoSegurado;     // Objeto que será segurado
     public LayerMask layer;               // Define quais objetos são interagíveis (ex. objetos na layer "Interagível")
 
     void Update()
@@ -37,6 +37,7 @@ public class SegurarEPegarObjetos : MonoBehaviour
         if (objetoSegurado == null)
         {
             objetoSegurado = objeto;
+            Debug.Log("Objeto segurado: " + objetoSegurado.name);  // Verifica se o objeto foi atribuído
 
             // Desativa o Rigidbody para que o objeto não seja afetado pela física
             if (objetoSegurado.GetComponent<Rigidbody>())
