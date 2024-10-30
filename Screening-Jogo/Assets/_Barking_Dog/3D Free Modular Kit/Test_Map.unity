@@ -1187,9 +1187,7 @@ MonoBehaviour:
   layerNPC:
     serializedVersion: 2
     m_Bits: 128
-  pontoMao: {fileID: 0}
-  objetoSegurado: {fileID: 0}
-  segurarEPegarObjetos: {fileID: 0}
+  segurarEPegarObjetos: {fileID: 179425862}
 --- !u!1001 &194271076
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1331,7 +1329,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38b12e197a36b62489dba5cd1c9a1d16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vidaAtual: 0
+  vidaAtual: 50
   vidaMaxima: 100
   tipoMedicamentoCorreto: B
 --- !u!1001 &244980073
@@ -1497,7 +1495,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38b12e197a36b62489dba5cd1c9a1d16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vidaAtual: 0
+  vidaAtual: 50
   vidaMaxima: 100
   tipoMedicamentoCorreto: B
 --- !u!4 &266920941 stripped
@@ -3665,7 +3663,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38b12e197a36b62489dba5cd1c9a1d16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vidaAtual: 0
+  vidaAtual: 50
   vidaMaxima: 100
   tipoMedicamentoCorreto: A
 --- !u!1001 &457257714
@@ -5031,7 +5029,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38b12e197a36b62489dba5cd1c9a1d16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vidaAtual: 0
+  vidaAtual: 50
   vidaMaxima: 100
   tipoMedicamentoCorreto: A
 --- !u!1001 &860635248
