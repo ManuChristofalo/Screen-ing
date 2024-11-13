@@ -31,7 +31,7 @@ public class MedicarNPC : MonoBehaviour
                     {
                         // Passa o GameObject do objeto segurado ao método AplicarMedicamento
                         npc.AplicarMedicamento(objetoSegurado.gameObject);
-                        Debug.Log("Medicamento aplicado ao NPC");
+                        Debug.Log("Medicamento aplicado ao NPC"); 
                     }
                     else
                     {

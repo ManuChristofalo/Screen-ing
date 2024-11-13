@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,8 @@ public class NPCVida : MonoBehaviour
     public Image barraVidaVermelha;
     private float decrementoPorSegundo;
     private Doenca doencaAtual; // Armazena a doença atribuída a este NPC
+
+    bool estado = true;
 
     private void Start()
     {
@@ -24,6 +27,8 @@ public class NPCVida : MonoBehaviour
             vidaAtual = Mathf.Clamp(vidaAtual, 0f, vidaMaxima);
             AtualizarBarrasDeVida();
         }
+
+        if(vidaAtual <= 0) estado = false;
     }
 
     // Método para atribuir a doença
@@ -42,38 +47,44 @@ public class NPCVida : MonoBehaviour
             return;
         }
 
-        string nomeRemedio = remedio.name;
-        Debug.Log("AplicarMedicamento chamado com o tipo de medicamento: " + nomeRemedio);
+        if(estado == false) Debug.Log("O paciente já está morto!");
 
-        if (nomeRemedio == doencaAtual.remedioCorreto)
-        {
-            if (vidaAtual >= 100)
+        else if(estado == true){
+
+            string nomeRemedio = remedio.name;
+            Debug.Log("AplicarMedicamento chamado com o tipo de medicamento: " + nomeRemedio);
+
+            if (nomeRemedio == doencaAtual.remedioCorreto)
             {
-                Debug.Log("O paciente já está com a vida cheia!");
+                if (vidaAtual >= 100)
+                {
+                    Debug.Log("O paciente já está com a vida cheia!");
+                }
+                else
+                {
+                    float aumento = Mathf.Min(50f, vidaMaxima - vidaAtual);
+                    vidaAtual += aumento;
+                    Debug.Log("Medicamento correto! Vida aumentada em " + aumento + " pontos. Vida atual: " + vidaAtual);
+                }
             }
             else
             {
-                float aumento = Mathf.Min(50f, vidaMaxima - vidaAtual);
-                vidaAtual += aumento;
-                Debug.Log("Medicamento correto! Vida aumentada em " + aumento + " pontos. Vida atual: " + vidaAtual);
+                if (vidaAtual <= 20)
+                {
+                    vidaAtual = 0;
+                    estado = false;
+                    Debug.Log("O paciente morreu :(");
+                }
+                else
+                {
+                    vidaAtual -= 20f;
+                    Debug.Log("Medicamento incorreto! Vida reduzida em 20 pontos. Vida atual: " + vidaAtual);
+                }
             }
-        }
-        else
-        {
-            if (vidaAtual <= 20)
-            {
-                vidaAtual = 0;
-                Debug.Log("O paciente morreu :(");
-            }
-            else
-            {
-                vidaAtual -= 20f;
-                Debug.Log("Medicamento incorreto! Vida reduzida em 20 pontos. Vida atual: " + vidaAtual);
-            }
-        }
 
-        vidaAtual = Mathf.Clamp(vidaAtual, 0f, vidaMaxima);
-        AtualizarBarrasDeVida();
+            vidaAtual = Mathf.Clamp(vidaAtual, 0f, vidaMaxima);
+            AtualizarBarrasDeVida();
+        }
     }
 
     private void AtualizarBarrasDeVida()
