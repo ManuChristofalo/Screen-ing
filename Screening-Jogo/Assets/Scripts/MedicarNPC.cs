@@ -27,11 +27,10 @@ public class MedicarNPC : MonoBehaviour
                 {
                     // Verifique se o objeto segurado é um medicamento
                     Transform objetoSegurado = segurarEPegarObjetos.objetoSegurado; // Pegue o objeto diretamente do SegurarEPegarObjetos
-                    Medicamento medicamento = objetoSegurado.GetComponent<Medicamento>();
-                    
-                    if (medicamento != null)
+                    if (objetoSegurado != null)
                     {
-                        npc.AplicarMedicamento(medicamento);
+                        // Passa o GameObject do objeto segurado ao método AplicarMedicamento
+                        npc.AplicarMedicamento(objetoSegurado.gameObject);
                         Debug.Log("Medicamento aplicado ao NPC");
                     }
                     else
