@@ -6,9 +6,7 @@ public class PranchetaInteraction : MonoBehaviour
     public GameObject canvasSintomas; // Arraste o CanvasSintomas aqui no Inspector
     private bool isLookingAtPrancheta = false; // Indica se o player está olhando para a prancheta
     public float maxRaycastDistance = 5f; // Distância máxima para detectar a prancheta
-    public TextMeshProUGUI nomeDoencaText;
     public TextMeshProUGUI sintomasText;
-    public TextMeshProUGUI remedioText;
     public TextMeshProUGUI historicoText;
 
     void Start()
@@ -57,9 +55,8 @@ public class PranchetaInteraction : MonoBehaviour
         {
             Debug.Log("Tecla E pressionada e olhando para a prancheta.");
             canvasSintomas.SetActive(true); // Ativa o canvas para exibir a tela
-            MostrarInformacoesPaciente("Bebâdo (ressaca)", 
-                            "Dor de cabeça, fotofobia, sede, tontura, desorientação, ânsia.", 
-                            "Soro em cápsula", "Paciente relata ter participado de uma festa ontem à noite");
+            MostrarInformacoesPaciente("Dor de cabeça, fotofobia, sede, tontura, desorientação, ânsia.", 
+                                       "Paciente relata ter participado de uma festa ontem à noite");
         }
 
         // Pressiona "Q" para fechar a tela
@@ -70,14 +67,11 @@ public class PranchetaInteraction : MonoBehaviour
         }
     }
 
-    void MostrarInformacoesPaciente(string doenca, string sintomas, string remedio, string historico)
+    void MostrarInformacoesPaciente(string sintomas, string historico)
     {
         // Exibir informações do paciente
-        nomeDoencaText.text = doenca;
-        remedioText.text = remedio;
         sintomasText.text = sintomas;
         historicoText.text = historico;    
-
         
         canvasSintomas.SetActive(true); // Ativa a tela de informações
     }
