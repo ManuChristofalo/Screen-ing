@@ -1,17 +1,24 @@
+using UnityEngine;
 using System.Collections.Generic;
+using TMPro;
 
 public class Doenca
 {
-    public string nome;
-    public List<string> sintomas;
-    public string historico;
-    public string remedioCorreto;
+    public string Nome { get; private set; }
+    public List<string> Sintomas { get; private set; }
+    public string Historico { get; private set; }
+    public string MedicamentoRecomendado { get; private set; }
 
-    public Doenca(string nome, List<string> sintomas, string historico, string remedioCorreto)
+    public Doenca(string nome, List<string> sintomas, string historico, string medicamentoRecomendado)
     {
-        this.nome = nome;
-        this.sintomas = sintomas;
-        this.historico = historico;
-        this.remedioCorreto = remedioCorreto;
+        Nome = nome;
+        Sintomas = sintomas;
+        Historico = historico;
+        MedicamentoRecomendado = medicamentoRecomendado;
+    }
+
+    public string GerarDescricao()
+    {
+        return $"Sintomas: {string.Join(", ", Sintomas)}\nHistórico: {Historico}";
     }
 }

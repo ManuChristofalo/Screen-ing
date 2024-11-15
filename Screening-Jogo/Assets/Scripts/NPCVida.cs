@@ -28,14 +28,14 @@ public class NPCVida : MonoBehaviour
             AtualizarBarrasDeVida();
         }
 
-        if(vidaAtual <= 0) estado = false;
+        if (vidaAtual <= 0) estado = false;
     }
 
     // Método para atribuir a doença
     public void AtribuirDoenca(Doenca doenca)
     {
         doencaAtual = doenca;
-        if(doenca != null) Debug.Log("Doença atribuída ao NPC: " + (doencaAtual != null ? doencaAtual.nome : "Nenhuma doença"));
+        if (doenca != null) Debug.Log("Doença atribuída ao NPC: " + (doencaAtual != null ? doencaAtual.Nome : "Nenhuma doença"));
     }
 
     // Método para aplicar medicamento e verificar compatibilidade com a doença atual
@@ -47,14 +47,14 @@ public class NPCVida : MonoBehaviour
             return;
         }
 
-        if(estado == false) Debug.Log("O paciente já está morto!");
+        if (estado == false) Debug.Log("O paciente já está morto!");
 
-        else if(estado == true){
-
+        else if (estado == true)
+        {
             string nomeRemedio = remedio.name;
             Debug.Log("AplicarMedicamento chamado com o tipo de medicamento: " + nomeRemedio);
 
-            if (nomeRemedio == doencaAtual.remedioCorreto)
+            if (nomeRemedio == doencaAtual.MedicamentoRecomendado)
             {
                 if (vidaAtual >= 100)
                 {

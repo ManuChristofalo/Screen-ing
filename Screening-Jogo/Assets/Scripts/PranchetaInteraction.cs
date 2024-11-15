@@ -3,76 +3,93 @@ using TMPro;
 
 public class PranchetaInteraction : MonoBehaviour
 {
-    public GameObject canvasSintomas; // Arraste o CanvasSintomas aqui no Inspector
-    private bool isLookingAtPrancheta = false; // Indica se o player está olhando para a prancheta
-    public float maxRaycastDistance = 5f; // Distância máxima para detectar a prancheta
-    public TextMeshProUGUI sintomasText;
-    public TextMeshProUGUI historicoText;
+    public GameObject canvasSintomas; // Arraste o CanvasSintomas no Inspector
+    public TextMeshProUGUI sintomasText; // Campo para o texto de sintomas
+    public TextMeshProUGUI historicoText; // Campo para o texto de histórico
+    public float maxRaycastDistance = 5f; // Distância máxima do Raycast
+
+    private bool isLookingAtPrancheta = false; // Indica se o jogador está olhando para a prancheta
+    private Doenca doencaAtual; // Doença atribuída ao paciente
 
     void Start()
     {
-        // Esconde o canvas de sintomas no início
+        // Esconde o Canvas ao iniciar o jogo
         canvasSintomas.SetActive(false);
+    }
+
+    public void AtribuirDoenca(Doenca doenca)
+    {
+        doencaAtual = doenca;
+        if (doenca != null)
+        {
+            Debug.Log($"Doença '{doenca.Nome}' atribuída à prancheta.");
+        }
+        else
+        {
+            Debug.LogWarning("Tentativa de atribuir uma doença nula à prancheta.");
+        }
     }
 
     void Update()
     {
-        // Envia um Raycast a partir do centro da tela para detectar a prancheta
         Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
         RaycastHit hit;
 
-        // Verifica se o Raycast atinge a prancheta dentro da distância máxima
-        if (Physics.Raycast(ray, out hit, maxRaycastDistance))
+        if (Physics.Raycast(ray, out hit, maxRaycastDistance) && hit.transform == transform)
         {
-            if (hit.transform == transform) // Checa se o objeto atingido é a prancheta
-            {
-                if (!isLookingAtPrancheta)
-                {
-                    Debug.Log("Olhando para a prancheta.");
-                }
-                isLookingAtPrancheta = true;
-            }
-            else
-            {
-                if (isLookingAtPrancheta)
-                {
-                    Debug.Log("Parou de olhar para a prancheta.");
-                }
-                isLookingAtPrancheta = false;
-            }
+            isLookingAtPrancheta = true;
         }
         else
         {
-            if (isLookingAtPrancheta)
-            {
-                Debug.Log("Parou de olhar para a prancheta.");
-            }
             isLookingAtPrancheta = false;
         }
 
-        // Verifica se o player está olhando para a prancheta e aperta "E" para abrir a tela
         if (isLookingAtPrancheta && Input.GetKeyDown(KeyCode.E))
         {
-            Debug.Log("Tecla E pressionada e olhando para a prancheta.");
-            canvasSintomas.SetActive(true); // Ativa o canvas para exibir a tela
-            MostrarInformacoesPaciente("Dor de cabeça, fotofobia, sede, tontura, desorientação, ânsia.", 
-                                       "Paciente relata ter participado de uma festa ontem à noite");
+            Debug.Log("Olhando para a prancheta e pressionando 'E'. Tentando mostrar informações do paciente.");
+            MostrarInformacoesPaciente();
         }
 
-        // Pressiona "Q" para fechar a tela
         if (canvasSintomas.activeSelf && Input.GetKeyDown(KeyCode.Q))
         {
-            Debug.Log("Tecla Q pressionada, fechando tela.");
-            canvasSintomas.SetActive(false); // Desativa o canvas para fechar a tela
+            Debug.Log("Canvas está ativo e pressionando 'Q'. Fechando o canvas.");
+            FecharCanvas();
         }
     }
 
-    void MostrarInformacoesPaciente(string sintomas, string historico)
+    void MostrarInformacoesPaciente()
     {
-        // Exibir informações do paciente
-        sintomasText.text = sintomas;
-        historicoText.text = historico;    
-        
-        canvasSintomas.SetActive(true); // Ativa a tela de informações
+        if (doencaAtual == null)
+        {
+            Debug.LogWarning("doencaAtual está nulo. Certifique-se de que uma doença foi atribuída a esta prancheta.");
+            return;
+        }
+
+        // Atualiza os textos no Canvas
+        if (sintomasText != null && historicoText != null)
+        {
+            sintomasText.text = $"Sintomas: {string.Join(", ", doencaAtual.Sintomas)}";
+            historicoText.text = $"Histórico: {doencaAtual.Historico}";
+        }
+        else
+        {
+            Debug.LogError("Campos de texto não atribuídos no Inspector.");
+        }
+
+        // Ativa o Canvas
+        if (canvasSintomas != null)
+        {
+            canvasSintomas.SetActive(true);
+        }
+        else
+        {
+            Debug.LogError("CanvasSintomas não foi atribuído no Inspector.");
+        }
+    }
+
+    void FecharCanvas()
+    {
+        // Fecha o Canvas
+        canvasSintomas.SetActive(false);
     }
 }

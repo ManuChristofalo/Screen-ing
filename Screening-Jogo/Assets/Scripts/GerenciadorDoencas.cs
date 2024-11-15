@@ -1,9 +1,11 @@
 using UnityEngine;
 using System.Collections.Generic;
+using TMPro;
 
 public class GerenciadorDoencas : MonoBehaviour
 {
     private List<Doenca> doencas;
+    public TextMeshProUGUI textoPrancheta; // arraste o TextMeshPro do Canvas para esta referência no Inspector
 
     void Start()
     {
@@ -21,20 +23,21 @@ public class GerenciadorDoencas : MonoBehaviour
 
     private void RandomizarDoencasParaPacientes()
     {
-        // Encontra todos os NPCs com o script Paciente
         Paciente[] pacientes = FindObjectsOfType<Paciente>();
         
-        foreach (GameObject obj in GameObject.FindObjectsOfType<GameObject>())
+        foreach (Paciente paciente in pacientes)
         {
-            if (obj.layer == LayerMask.NameToLayer("NPC"))
+            Doenca doencaRandom = doencas[Random.Range(0, doencas.Count)];
+            paciente.AtribuirDoenca(doencaRandom);
+
+            PranchetaInteraction prancheta = paciente.GetComponentInChildren<PranchetaInteraction>();
+            if (prancheta != null)
             {
-                NPCVida npc = obj.GetComponent<NPCVida>();
-                if (npc != null)
-                {
-                    // Escolhe uma doença aleatória para cada paciente
-                    Doenca doencaRandom = doencas[Random.Range(0, doencas.Count)];
-                    npc.AtribuirDoenca(doencaRandom);
-                }
+                prancheta.AtribuirDoenca(doencaRandom);
+            }
+            else
+            {
+                Debug.LogWarning($"Prancheta não encontrada para o paciente: {paciente.name}");
             }
         }
     }
