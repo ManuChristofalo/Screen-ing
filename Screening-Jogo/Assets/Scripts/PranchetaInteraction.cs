@@ -38,6 +38,7 @@ public class PranchetaInteraction : MonoBehaviour
         if (Physics.Raycast(ray, out hit, maxRaycastDistance) && hit.transform == transform)
         {
             isLookingAtPrancheta = true;
+            Debug.Log("Olhando para a prancheta.");
         }
         else
         {

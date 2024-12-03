@@ -28,7 +28,14 @@ public class GerenciadorDoencas : MonoBehaviour
         foreach (Paciente paciente in pacientes)
         {
             Doenca doencaRandom = doencas[Random.Range(0, doencas.Count)];
-            paciente.AtribuirDoenca(doencaRandom);
+
+            NPCVida npc = paciente.GetComponent<NPCVida>();
+            if (npc != null){
+                npc.AtribuirDoenca(doencaRandom);
+            } 
+
+
+            //paciente.AtribuirDoenca(doencaRandom);
 
             PranchetaInteraction prancheta = paciente.GetComponentInChildren<PranchetaInteraction>();
             if (prancheta != null)
