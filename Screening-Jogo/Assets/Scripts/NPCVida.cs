@@ -14,12 +14,24 @@ public class NPCVida : MonoBehaviour
 
     bool estado = true;
     bool flag = false;
+    [SerializeField] private GameObject corpo; // Arraste o objeto "corpo" aqui no inspetor
+    [SerializeField] private GameObject esqueleto; // Arraste o objeto "esqueleto" aqui no inspetor
+
 
     private void Start()
     {
+        // Configuração inicial de visibilidade
+        if (corpo != null) corpo.SetActive(true);
+        if (esqueleto != null){
+            esqueleto.SetActive(false);
+            Debug.LogWarning("Esqueleto EXISTE!");
+        }
+
+        if(esqueleto == null) Debug.LogWarning("Esqueleto não atribuido!");
         decrementoPorSegundo = vidaMaxima / 150f;
         soundController = FindObjectOfType<SoundController>();
         AtualizarBarrasDeVida();
+        
     }
 
     private void Update()
@@ -37,6 +49,18 @@ public class NPCVida : MonoBehaviour
             if(flag == false){
                 Debug.LogWarning("Paciente morreu!");
                 flag = true;
+
+                // Alternar visibilidade dos objetos
+                if (corpo != null) corpo.SetActive(false);
+                if (esqueleto != null){
+                    esqueleto.SetActive(true);
+                    Debug.LogWarning("Esqueleto ATIVO!");
+                }
+
+                if(esqueleto == null){
+                    Debug.LogWarning("Esqueleto INATIVO!");
+                }
+
                 soundController.PlaySomMorte();
             }
         }
@@ -90,6 +114,9 @@ public class NPCVida : MonoBehaviour
                     estado = false;
                     Debug.Log("O paciente morreu :(");
                     medicamento.AplicarMedicamento(-1);
+
+                    if (corpo != null) corpo.SetActive(false);
+                    if (esqueleto != null) esqueleto.SetActive(true);
                 }
                 else
                 {
