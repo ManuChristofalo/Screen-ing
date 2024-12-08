@@ -10,12 +10,15 @@ public class NPCVida : MonoBehaviour
     public Image barraVidaVermelha;
     private float decrementoPorSegundo;
     private Doenca doencaAtual; // Armazena a doença atribuída a este NPC
+    private SoundController soundController;
 
     bool estado = true;
+    bool flag = false;
 
     private void Start()
     {
         decrementoPorSegundo = vidaMaxima / 150f;
+        soundController = FindObjectOfType<SoundController>();
         AtualizarBarrasDeVida();
     }
 
@@ -28,7 +31,15 @@ public class NPCVida : MonoBehaviour
             AtualizarBarrasDeVida();
         }
 
-        if (vidaAtual <= 0) estado = false;
+        if (vidaAtual <= 0){
+            estado = false;
+            
+            if(flag == false){
+                Debug.LogWarning("Paciente morreu!");
+                flag = true;
+                soundController.PlaySomMorte();
+            }
+        }
     }
 
     // Método para atribuir a doença
