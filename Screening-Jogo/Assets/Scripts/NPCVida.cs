@@ -41,6 +41,9 @@ public class NPCVida : MonoBehaviour
     // Método para aplicar medicamento e verificar compatibilidade com a doença atual
     public void AplicarMedicamento(GameObject remedio)
     {
+
+        Medicamento medicamento = remedio.GetComponent<Medicamento>();
+        
         if (doencaAtual == null)
         {
             Debug.LogWarning("Nenhuma doença atribuída ao paciente.");
@@ -48,7 +51,7 @@ public class NPCVida : MonoBehaviour
         }
 
         if (estado == false) Debug.Log("O paciente já está morto!");
-
+        
         else if (estado == true)
         {
             string nomeRemedio = remedio.name;
@@ -65,6 +68,7 @@ public class NPCVida : MonoBehaviour
                     float aumento = Mathf.Min(50f, vidaMaxima - vidaAtual);
                     vidaAtual += aumento;
                     Debug.Log("Medicamento correto! Vida aumentada em " + aumento + " pontos. Vida atual: " + vidaAtual);
+                    medicamento.AplicarMedicamento(1);
                 }
             }
             else
@@ -74,11 +78,13 @@ public class NPCVida : MonoBehaviour
                     vidaAtual = 0;
                     estado = false;
                     Debug.Log("O paciente morreu :(");
+                    medicamento.AplicarMedicamento(-1);
                 }
                 else
                 {
                     vidaAtual -= 20f;
                     Debug.Log("Medicamento incorreto! Vida reduzida em 20 pontos. Vida atual: " + vidaAtual);
+                    medicamento.AplicarMedicamento(0);
                 }
             }
 
